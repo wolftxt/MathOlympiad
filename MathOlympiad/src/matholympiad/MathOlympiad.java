@@ -18,9 +18,12 @@ public class MathOlympiad {
     }
 
     private static void recursion(int index) {
-        int start = index == 0 ? 1 : 2 * sum(index);
+        int start = index == 0 ? 1 : sum(index);
         for (int i = start; i <= goal; i++) {
             if (index != 0 && i % sum(index) != 0) {
+                continue;
+            }
+            if (ensureUniqueness(i)) {
                 continue;
             }
             numbers[index] = i;
@@ -52,5 +55,22 @@ public class MathOlympiad {
             sum += numbers[i];
         }
         return sum;
+    }
+
+    /**
+     * Ensures that every number in the series is unique. When adding a new
+     * number to the series, it checks if a number in the series doesn't already
+     * have the same value.
+     *
+     * @param input
+     * @return
+     */
+    private static boolean ensureUniqueness(int input) {
+        for (int number : numbers) {
+            if (number == input) {
+                return true;
+            }
+        }
+        return false;
     }
 }
